@@ -52,7 +52,7 @@ def get_version_entry(branch, repo):
         A formatted changelog entry with markers
     """
     auth = os.environ['GITHUB_ACCESS_TOKEN']
-    run(shlex.split(f"git clone git@github.com:{repo}.git test"))
+    run(shlex.split(f"git clone https://github.com/{repo} test"))
     cmd = "git branch --show-current"
     test = os.path.join(os.getcwd(), 'test')
     default_branch = check_output(shlex.split(cmd), cwd=test).decode('utf-8').strip()
