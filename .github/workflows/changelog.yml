@@ -50,4 +50,4 @@ jobs:
       - name: Generate the Changelog
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python generate_changelog.py ${{ inputs.target }}
+        run: python generate_changelog.py ${{ github.event.inputs.target }}
