@@ -48,6 +48,6 @@ jobs:
           pip freeze
           pip check
       - name: Generate the Changelog
-        - env:
-            GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        - run: python generate_changelog.py ${{ input.target }}
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python generate_changelog.py ${{ input.target }}
