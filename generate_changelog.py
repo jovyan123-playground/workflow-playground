@@ -61,7 +61,7 @@ def get_version_entry(branch, repo):
 
     run(shlex.split(f'git fetch origin {branch} --tags'))
 
-    since = check_output(shlex.split(f"git --no-pager tag --merged {branch}"), cwd=test).decode('utf-8').strip()
+    since = check_output(shlex.split(f"git --no-pager tag --merged origin/{branch}"), cwd=test).decode('utf-8').strip()
     if not since:  # pragma: no cover
         raise ValueError(f"No tags found on branch {branch}")
 

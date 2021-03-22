@@ -50,4 +50,10 @@ jobs:
       - name: Generate the Changelog
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python generate_changelog.py ${{ github.event.inputs.target }}
+        run: |
+          python generate_changelog.py ${{ github.event.inputs.target }} > changelog.md
+          cat changelog.md
+      - uses: actions/upload-artifact@v2
+        with:
+          name: changelog
+          path: changelog.md
