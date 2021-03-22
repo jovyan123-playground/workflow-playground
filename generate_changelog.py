@@ -3,7 +3,7 @@ from pathlib import Path
 import re
 import shlex
 import shutil
-from subprocess import check_output, CalledProcessError, PIPE
+from subprocess import check_output, CalledProcessError, STDOUT
 import sys
 
 from ghapi.core import GhApi
@@ -16,7 +16,7 @@ def run(cmd, **kwargs):
     if not kwargs.pop("quiet", False):
         print(f"+ {cmd}")
 
-    kwargs.setdefault("stderr", PIPE)
+    kwargs.setdefault("stderr", STDOUT)
 
     parts = shlex.split(cmd)
     if "/" not in parts[0]:
