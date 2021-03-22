@@ -2,12 +2,33 @@ import os
 import re
 import shlex
 import shutil
-from subprocess import run, check_output
+from subprocess import check_output, CalledProcessError
 import sys
 
 from ghapi.core import GhApi
 from github_activity import generate_activity_md
 from pypandoc import convert_text
+
+
+def run(cmd, **kwargs):
+    """Run a command as a subprocess and get the output as a string"""
+    if not kwargs.pop("quiet", False):
+        print(f"+ {cmd}")
+
+    kwargs.setdefault("stderr", PIPE)
+
+    parts = shlex.split(cmd)
+    if "/" not in parts[0]:
+        executable = shutil.which(parts[0])
+        if not executable:
+            raise CalledProcessError(1, f'Could not find executable "{parts[0]}"')
+        parts[0] = normalize_path(executable)
+
+    try:
+        return check_output(parts, **kwargs).decode("utf-8").strip()
+    except CalledProcessError as e:
+        print(e.output.decode("utf-8").strip())
+        raise e
 
 
 def format_pr_entry(target, number):
@@ -52,16 +73,15 @@ def get_version_entry(branch, repo):
         A formatted changelog entry with markers
     """
     auth = os.environ['GITHUB_ACCESS_TOKEN']
-    run(shlex.split(f"git clone https://github.com/{repo} test"))
+    run(f"git clone https://github.com/{repo} test")
     cmd = "git branch --show-current"
     test = os.path.join(os.getcwd(), 'test')
-    default_branch = check_output(shlex.split(cmd), cwd=test).decode('utf-8').strip()
+    default_branch = run(cmd, cwd=test)
 
     branch = branch or default_branch
 
-    run(shlex.split(f'git fetch origin {branch} --tags'))
-
-    since = check_output(shlex.split(f"git --no-pager tag --merged origin/{branch}"), cwd=test).decode('utf-8').strip()
+    run(f'git fetch origin {branch} --tags')
+    since = run(f"git --no-pager tag --merged origin/{branch}"), cwd=test)
     if not since:  # pragma: no cover
         raise ValueError(f"No tags found on branch {branch}")
 
