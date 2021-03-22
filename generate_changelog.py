@@ -22,7 +22,7 @@ def run(cmd, **kwargs):
         executable = shutil.which(parts[0])
         if not executable:
             raise CalledProcessError(1, f'Could not find executable "{parts[0]}"')
-        parts[0] = normalize_path(executable)
+        parts[0] = executable
 
     try:
         return check_output(parts, **kwargs).decode("utf-8").strip()
