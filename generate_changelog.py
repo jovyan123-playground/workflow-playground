@@ -74,8 +74,8 @@ def get_version_entry(branch, repo):
     """
     auth = os.environ['GITHUB_ACCESS_TOKEN']
 
-    util.run('git config --global user.email "foo@example.com"')
-    util.run('git config --global user.name "foo"')
+    run('git config --global user.email "foo@example.com"')
+    run('git config --global user.name "foo"')
 
     run(f"git clone https://github.com/{repo} test")
     cmd = "git branch --show-current"
