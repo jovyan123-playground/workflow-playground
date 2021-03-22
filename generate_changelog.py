@@ -28,6 +28,7 @@ def run(cmd, **kwargs):
         return check_output(parts, **kwargs).decode("utf-8").strip()
     except CalledProcessError as e:
         print(e.output.decode("utf-8").strip())
+        print(e.stderr.decode("utf-8").strip())
         raise e
 
 
