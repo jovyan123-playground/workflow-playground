@@ -2,7 +2,7 @@ import os
 import re
 import shlex
 import shutil
-from subprocess import check_output, CalledProcessError
+from subprocess import check_output, CalledProcessError, PIPE
 import sys
 
 from ghapi.core import GhApi
