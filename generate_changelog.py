@@ -81,6 +81,7 @@ def get_version_entry(branch, repo):
     branch = branch or default_branch
 
     run(f'git fetch origin {branch} --tags')
+
     since = run(f"git --no-pager tag --merged origin/{branch}"), cwd=test)
     if not since:  # pragma: no cover
         raise ValueError(f"No tags found on branch {branch}")
