@@ -85,6 +85,7 @@ def get_version_entry(branch, repo):
 
     branch = branch or default_branch
 
+    print('\n\n*is this what I am running?')
     run(f'git fetch origin {branch} --tags')
 
     since = run(f"git --no-pager tag --merged origin/{branch}", cwd=test)
