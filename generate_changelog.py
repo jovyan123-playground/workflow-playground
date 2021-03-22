@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 import re
 import shlex
 import shutil
@@ -28,7 +29,7 @@ def run(cmd, **kwargs):
         return check_output(parts, **kwargs).decode("utf-8").strip()
     except CalledProcessError as e:
         print(e.output.decode("utf-8").strip())
-        print(e.stderr.decode("utf-8").strip())
+        #print(e.stderr.decode("utf-8").strip())
         raise e
 
 
@@ -149,3 +150,4 @@ if __name__ == '__main__':
         output = convert_text(output, 'rst', 'markdown')
     print('\n\n')
     print(output, '\n\n')
+    Path('changelog.md').write_text(output, encoding='utf-8')
