@@ -80,19 +80,20 @@ def get_version_entry(branch, repo):
     run('git config --global user.name "foo"')
 
     run(f"git clone https://github.com/{repo} test")
-    cmd = "git branch --show-current"
-    test = os.path.join(os.getcwd(), 'test')
-    default_branch = run(cmd, cwd=test)
+    prev_dir = os.getcwd()
+    os.chdir("test")
+    default_branch = run("git branch --show-current")
 
     branch = branch or default_branch
 
     run(f'git remote set-url origin https://github.com/{repo}')
     run(f'git fetch origin {branch} --tags')
 
-    since = run(f"git --no-pager tag --merged origin/{branch}", cwd=test)
+    since = run(f"git --no-pager tag --merged origin/{branch}")
     if not since:  # pragma: no cover
         raise ValueError(f"No tags found on branch {branch}")
 
+    os.chdir(prev_dir)
     shutil.rmtree(test)
 
     since = since.splitlines()[-1]
