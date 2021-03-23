@@ -3,7 +3,7 @@ from pathlib import Path
 import re
 import shlex
 import shutil
-from subprocess import check_output, CalledProcessError, STDOUT
+from subprocess import check_output, CalledProcessError, PIPE
 import sys
 
 from ghapi.core import GhApi
@@ -16,7 +16,7 @@ def run(cmd, **kwargs):
     if not kwargs.pop("quiet", False):
         print(f"+ {cmd}")
 
-    kwargs.setdefault("stderr", STDOUT)
+    kwargs.setdefault("stderr", PIPE)
 
     parts = shlex.split(cmd)
     if "/" not in parts[0]:
@@ -29,7 +29,7 @@ def run(cmd, **kwargs):
         return check_output(parts, **kwargs).decode("utf-8").strip()
     except CalledProcessError as e:
         print("output:", e.output.decode("utf-8").strip())
-        print("stderr", e.stderr.decode("utf-8").strip())
+        print("stderr:", e.stderr.decode("utf-8").strip())
         raise e
 
 
@@ -86,7 +86,7 @@ def get_version_entry(branch, repo):
 
     branch = branch or default_branch
 
-    print('\n\n*is this what I am running?')
+    run('git remote -v')
     run(f'git fetch origin {branch} --tags')
 
     since = run(f"git --no-pager tag --merged origin/{branch}", cwd=test)
