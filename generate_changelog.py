@@ -94,7 +94,7 @@ def get_version_entry(branch, repo):
         raise ValueError(f"No tags found on branch {branch}")
 
     os.chdir(prev_dir)
-    shutil.rmtree(test)
+    shutil.rmtree(Path(prev_dir) / "test")
 
     since = since.splitlines()[-1]
     branch = branch.split("/")[-1]
@@ -129,13 +129,9 @@ def get_version_entry(branch, repo):
     entry = "\n".join(entry).strip()
 
     output = f"""
-------------------------------
-
 {full_changelog}
 
 {entry}
-
-------------------------------
 """.strip()
 
     return output
@@ -149,6 +145,6 @@ if __name__ == '__main__':
     output = get_version_entry(branch, target)
     if convert_to_rst == 'true':
         output = convert_text(output, 'rst', 'markdown')
-    print('\n\n')
-    print(output, '\n\n')
+    print('\n\n------------------------------')
+    print(output, '------------------------------\n\n')
     Path('changelog.md').write_text(output, encoding='utf-8')
