@@ -86,7 +86,7 @@ def get_version_entry(branch, repo):
 
     branch = branch or default_branch
 
-    run('git remote -v')
+    run('git remote add origin https://github.com/{repo}')
     run(f'git fetch origin {branch} --tags')
 
     since = run(f"git --no-pager tag --merged origin/{branch}", cwd=test)
