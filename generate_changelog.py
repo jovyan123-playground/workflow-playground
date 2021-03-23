@@ -89,14 +89,14 @@ def get_version_entry(branch, repo):
     run(f'git remote set-url origin https://github.com/{repo}')
     run(f'git fetch origin {branch} --tags')
 
-    since = run(f"git --no-pager tag --merged origin/{branch}")
+    since = run(f"git --no-pager tag --sort=-creatordate --merged origin/{branch}")
     if not since:  # pragma: no cover
         raise ValueError(f"No tags found on branch {branch}")
 
     os.chdir(prev_dir)
     shutil.rmtree(Path(prev_dir) / "test")
 
-    since = since.splitlines()[-1]
+    since = since.splitlines()[0]
     branch = branch.split("/")[-1]
     print(f"Getting changes to {repo} since {since} on branch {branch}...")
 
