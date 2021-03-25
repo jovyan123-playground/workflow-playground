@@ -108,17 +108,9 @@ def get_version_entry(branch, repo):
         print("No PRs found")
         return f"## {version}\n\nNo merged PRs"
 
-    md = md.splitlines()
+    entry = md.replace("full changelog", "Full Changelog")
 
-    start = -1
-    full_changelog = ""
-    for (ind, line) in enumerate(md):
-        if "[full changelog]" in line:
-            full_changelog = line.replace("full changelog", "Full Changelog")
-        elif line.strip().startswith("### Merged PRs"):
-            start = ind
-
-    entry = md[start:]
+    entry = entry.splitlines()
 
     for (ind, line) in enumerate(entry):
         if re.search(r"\[@meeseeksmachine\]", line) is not None:
