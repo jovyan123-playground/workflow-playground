@@ -121,8 +121,6 @@ def get_version_entry(branch, repo):
     entry = "\n".join(entry).strip()
 
     output = f"""
-{full_changelog}
-
 {entry}
 """.strip()
 
