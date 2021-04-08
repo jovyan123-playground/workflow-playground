@@ -15,8 +15,8 @@ def run(cmd, **kwargs):
     """Run a command as a subprocess and get the output as a string"""
     if not kwargs.pop("quiet", False):
         print(f"+ {cmd}")
-
-    kwargs.setdefault("stderr", PIPE)
+    else:
+        kwargs.setdefault("stderr", PIPE)
 
     parts = shlex.split(cmd)
     if "/" not in parts[0]:
@@ -116,7 +116,7 @@ def get_version_entry(branch, repo):
         if re.search(r"\[@meeseeksmachine\]", line) is not None:
             match = re.search(r"Backport PR #(\d+)", line)
             if match:
-                entry[ind] = format_pr_entry(match.groups()[0])
+                entry[ind] = format_pr_entry(target, match.groups()[0])
 
     entry = "\n".join(entry).strip()
 
