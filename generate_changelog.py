@@ -106,7 +106,7 @@ def get_version_entry(branch, repo):
 
     if not md:
         print("No PRs found")
-        return f"## {version}\n\nNo merged PRs"
+        return f"## New Version\n\nNo merged PRs"
 
     entry = md.replace("full changelog", "Full Changelog")
 
