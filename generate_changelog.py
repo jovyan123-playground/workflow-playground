@@ -138,7 +138,8 @@ if __name__ == '__main__':
     print('convert to rst:', convert_to_rst)
     output = get_version_entry(branch, target)
     if convert_to_rst.lower() == 'true':
-         from pypandoc.pandoc_download import download_pandoc download_pandoc()
+        from pypandoc.pandoc_download import download_pandoc
+        download_pandoc()
         output = convert_text(output, 'rst', 'markdown')
     print('\n\n------------------------------')
     print(output, '------------------------------\n\n')
