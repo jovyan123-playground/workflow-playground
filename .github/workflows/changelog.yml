@@ -32,7 +32,7 @@ jobs:
           pip install --upgrade pip setuptools wheel --user
       - name: Install the Python dependencies
         run: |
-          pip install git+https://github.com/executablebooks/github-activity pandoc ghapi pypandoc
+          pip install git+https://github.com/executablebooks/github-activity ghapi pypandoc
       - name: List installed packages
         run: |
           pip freeze
