@@ -56,7 +56,7 @@ def format_pr_entry(target, number):
     url = pull.url
     user_name = pull.user.login
     user_url = pull.user.html_url
-    return f"- {title} [{number}]({url}) [@{user_name}]({user_url})"
+    return f"- {title} [#{number}]({url}) [@{user_name}]({user_url})"
 
 
 def get_version_entry(branch, repo):
