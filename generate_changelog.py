@@ -137,7 +137,7 @@ if __name__ == '__main__':
     print('branch:', branch)
     print('convert to rst:', convert_to_rst)
     output = get_version_entry(branch, target)
-    if convert_to_rst == 'true':
+    if convert_to_rst.lower() == 'true':
         output = convert_text(output, 'rst', 'markdown')
     print('\n\n------------------------------')
     print(output, '------------------------------\n\n')
