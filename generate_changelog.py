@@ -132,6 +132,10 @@ if __name__ == '__main__':
     target = sys.argv[-1]
     branch = os.environ.get('INPUT_BRANCH')
     convert_to_rst = os.environ.get('INPUT_CONVERT_TO_RST')
+    print('Generating changelog')
+    print('target:', target)
+    print('branch:', branch)
+    print('convert to rst:', convert_to_rst)
     output = get_version_entry(branch, target)
     if convert_to_rst == 'true':
         output = convert_text(output, 'rst', 'markdown')
