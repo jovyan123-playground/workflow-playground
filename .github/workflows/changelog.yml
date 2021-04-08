@@ -41,6 +41,8 @@ jobs:
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          export INPUT_BRANCH=${{ github.event.inputs.branch }}
+          export INPUT_CONVERT_TO_RST=${{ github.event.inputs.convert_to_rst }}
           python generate_changelog.py ${{ github.event.inputs.target }}
           cat changelog.md
       - uses: actions/upload-artifact@v2
