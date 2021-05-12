@@ -96,12 +96,14 @@ def get_version_entry(branch, repo):
     os.chdir(prev_dir)
     shutil.rmtree(Path(prev_dir) / "test")
 
-    since = since.splitlines()[0]
+    since = os.environ.get('INPUT_SINCE') or since.splitlines()[0]
+    until = os.environ.get('INPUT_UNTIL')
+
     branch = branch.split("/")[-1]
     print(f"Getting changes to {repo} since {since} on branch {branch}...")
 
     md = generate_activity_md(
-        repo, since=since, kind="pr", heading_level=2, branch=branch
+        repo, since=since, until=until, kind="pr", heading_level=2, branch=branch
     )
 
     if not md:

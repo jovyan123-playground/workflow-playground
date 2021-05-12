@@ -11,6 +11,12 @@ on:
       convert_to_rst:
         description: Whether to convert to RST
         required: false
+      since:
+        description: Use PRs with activity since this date or git reference
+        required: false
+      until:
+        description: Use PRs with activity until this date or git reference
+        required: false
 jobs:
   build:
     runs-on: ${{ matrix.os }}-latest
@@ -43,6 +49,8 @@ jobs:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           export INPUT_BRANCH=${{ github.event.inputs.branch }}
+          export INPUT_SINCE=${{ github.event.inputs.since }}
+          export INPUT_UNTIL=${{ github.event.inputs.until }}
           export INPUT_CONVERT_TO_RST=${{ github.event.inputs.convert_to_rst }}
           python generate_changelog.py ${{ github.event.inputs.target }}
           cat changelog.md
