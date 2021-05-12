@@ -97,7 +97,7 @@ def get_version_entry(branch, repo):
     shutil.rmtree(Path(prev_dir) / "test")
 
     since = os.environ.get('INPUT_SINCE') or since.splitlines()[0]
-    until = os.environ.get('INPUT_UNTIL')
+    until = os.environ.get('INPUT_UNTIL') or None
 
     branch = branch.split("/")[-1]
     print(f"Getting changes to {repo} since {since} on branch {branch}...")
