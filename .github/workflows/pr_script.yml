@@ -1,0 +1,35 @@
+name: Run Script on PR
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Target Pull Request Link
+        required: true
+      script:
+        description: List of commands to run
+        required: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Install Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: "3.9"
+          architecture: "x64"
+      - name: Upgrade packaging dependencies
+        run: |
+          pip install --upgrade pip setuptools wheel --user
+      - name: Install dependencies
+        run: |
+          pip install ghapi
+      - name: Run the script
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          TARGET: $${{ github.event.inputs.target }}
+          SCRIPT: $${{ github.event.inputs.script }}
+          MAINTAINER: $${{ github.actor }}
+        run: |
+          python pr_script.py
