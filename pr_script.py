@@ -68,9 +68,13 @@ def run_script(target, script):
 
 if __name__ == '__main__':
     # https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#inputs
-    target = os.environ.get('TARGET')
+    target = os.environ.get('INPUT_TARGET')
     maintainer = os.environ['MAINTAINER']
-    script = json.loads(os.environ.get('SCRIPT', '[]'))
+    script = json.loads(os.environ.get('INPUT_SCRIPT', '[]'))
+    if not isinstance(script, list):
+        script = [script]
+    if os.environ.get('INPUT_PRE_COMMIT') == 'true':
+        script += ['pre-commit run --all-files']
     print(f'Running script on {target}:')
     print(f'   {script}')
     run_script(target, script)

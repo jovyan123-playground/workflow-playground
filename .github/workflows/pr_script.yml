@@ -6,7 +6,10 @@ on:
         description: Target Pull Request Link
         required: true
       script:
-        description: List of commands to run
+        description: Command(s) to run
+        required: false
+      pre-commit:
+        description: Whether to run the pre-commit script
         required: false
 jobs:
   build:
@@ -24,12 +27,10 @@ jobs:
           pip install --upgrade pip setuptools wheel --user
       - name: Install dependencies
         run: |
-          pip install ghapi
+          pip install ghapi pre-commit
       - name: Run the script
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          TARGET: $${{ github.event.inputs.target }}
-          SCRIPT: $${{ github.event.inputs.script }}
           MAINTAINER: $${{ github.actor }}
         run: |
           python pr_script.py
