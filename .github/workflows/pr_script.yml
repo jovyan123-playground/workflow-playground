@@ -31,6 +31,6 @@ jobs:
       - name: Run the script
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          MAINTAINER: $${{ github.actor }}
+          MAINTAINER: ${{ github.actor }}
         run: |
           python pr_script.py
