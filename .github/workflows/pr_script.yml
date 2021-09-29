@@ -8,7 +8,7 @@ on:
       script:
         description: Command(s) to run
         required: false
-      pre-commit:
+      pre_commit:
         description: Whether to run the pre-commit script
         required: false
 jobs:
@@ -32,5 +32,8 @@ jobs:
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           MAINTAINER: ${{ github.actor }}
+          TARGET: ${{ github.event.inputs.target }}
+          SCRIPT: ${{ github.event.inputs.script }}
+          PRE_COMMIT: ${{ github.event.inputs.pre_commit }}
         run: |
           python pr_script.py
