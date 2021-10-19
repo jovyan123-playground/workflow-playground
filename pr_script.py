@@ -70,7 +70,10 @@ if __name__ == '__main__':
     # https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#inputs
     target = os.environ.get('TARGET')
     maintainer = os.environ['MAINTAINER']
-    script = json.loads(os.environ.get('SCRIPT', '[]'))
+    try:
+        script = json.loads(os.environ.get('SCRIPT', '[]'))
+    except Exception:
+        script = os.environ.get('SCRIPT', [])
     if not isinstance(script, list):
         script = [script]
     if os.environ.get('PRE_COMMIT') == 'true':
